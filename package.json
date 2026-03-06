@@ -1,6 +1,6 @@
 {
   "name": "react-native-picture-selector",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "High-performance photo/video picker for React Native using Nitro Modules",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
