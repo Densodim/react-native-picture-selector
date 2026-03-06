@@ -48,8 +48,8 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
 
   func openPicker(options: PictureSelectorOptions) -> Promise<[MediaAsset]> {
     return Promise { [weak self] resolver in
-      guard let self = self else {
-        resolver.reject(PictureSelectorError.unknown("Instance deallocated"))
+      guard let self else {
+        resolver.reject(PictureSelectorError.unknown("openPicker: native module was deallocated"))
         return
       }
 
@@ -85,8 +85,8 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
 
   func openCamera(options: PictureSelectorOptions) -> Promise<[MediaAsset]> {
     return Promise { [weak self] resolver in
-      guard let self = self else {
-        resolver.reject(PictureSelectorError.unknown("Instance deallocated"))
+      guard let self else {
+        resolver.reject(PictureSelectorError.unknown("openCamera: native module was deallocated"))
         return
       }
 
@@ -112,7 +112,10 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
           cameraConfig,
           fromViewController: topVC
         ) { [weak self] result, _ in
-          guard let self = self else { return }
+          guard let self else {
+            resolver.reject(PictureSelectorError.unknown("openCamera: native module was deallocated"))
+            return
+          }
           guard let photoAsset = result?.photoAsset else {
             resolver.reject(PictureSelectorError.cancelled)
             return
@@ -327,7 +330,11 @@ extension HybridPictureSelector: PhotoPickerControllerDelegate {
     activePicker = nil
 
     pickerController.dismiss(animated: true) { [weak self] in
-      guard let self = self, let s = captured else { return }
+      guard let s = captured else { return }
+      guard let self else {
+        s.resolver(.failure(PictureSelectorError.unknown("pickerController: native module was deallocated")))
+        return
+      }
       Task {
         do {
           let assets = try await self.mapResults(result, compress: s.options.compress)
