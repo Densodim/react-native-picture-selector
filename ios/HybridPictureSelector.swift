@@ -54,6 +54,13 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
       }
 
       DispatchQueue.main.async {
+        if self.session != nil {
+          resolver.reject(PictureSelectorError.unknown(
+            "A picker or camera session is already active. Dismiss it before opening a new one."
+          ))
+          return
+        }
+
         guard let topVC = self.topViewController() else {
           resolver.reject(PictureSelectorError.unknown(
             "No active UIViewController. Ensure the picker is called from a mounted component."
@@ -91,6 +98,13 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
       }
 
       DispatchQueue.main.async {
+        if self.session != nil {
+          resolver.reject(PictureSelectorError.unknown(
+            "A picker or camera session is already active. Dismiss it before opening a new one."
+          ))
+          return
+        }
+
         guard let topVC = self.topViewController() else {
           resolver.reject(PictureSelectorError.unknown("No active UIViewController."))
           return
