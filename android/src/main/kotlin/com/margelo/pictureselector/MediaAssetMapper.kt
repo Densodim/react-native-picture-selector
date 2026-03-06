@@ -31,10 +31,7 @@ object MediaAssetMapper {
     val finalUri  = if (finalPath.startsWith("content://")) finalPath
                     else "file://$finalPath"
 
-    val editedPath = when {
-      media.isCut  && media.cutPath      != null -> "file://${media.cutPath}"
-      else -> null
-    }
+    val editedPath: String? = if (media.isCut) finalUri else null
 
     val type     = if (media.mimeType?.startsWith("video") == true) "video" else "image"
     val fileName = File(finalPath).name.takeIf { it.isNotEmpty() } ?: "unknown"

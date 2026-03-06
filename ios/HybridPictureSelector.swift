@@ -117,7 +117,7 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
         ) { [weak self] result, _ in
           guard let self = self else { return }
           guard let photoAsset = result?.photoAsset else {
-            resolver.resolve([])
+            resolver.reject(PictureSelectorError.cancelled)
             return
           }
           Task {

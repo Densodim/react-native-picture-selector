@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { PictureSelector } from './PictureSelector'
 import type { MediaAsset, PictureSelectorOptions, PickerError } from './types'
-import { toPickerError } from './types'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Hook state shape
@@ -66,7 +65,7 @@ export function usePictureSelector(
         setState({ assets: results, loading: false, error: null })
         return results
       } catch (err) {
-        const pickerErr = toPickerError(err)
+        const pickerErr = err as PickerError
         // Do not surface CANCELLED as an error — just restore loading state
         if (pickerErr.code === 'CANCELLED') {
           setState((s) => ({ ...s, loading: false }))
