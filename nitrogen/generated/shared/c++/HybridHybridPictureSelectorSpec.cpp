@@ -7,7 +7,7 @@
 
 #include "HybridHybridPictureSelectorSpec.hpp"
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
   void HybridHybridPictureSelectorSpec::loadHybridMethods() {
     // load base methods/properties
@@ -19,4 +19,4 @@ namespace margelo::pictureselector {
     });
   }
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector

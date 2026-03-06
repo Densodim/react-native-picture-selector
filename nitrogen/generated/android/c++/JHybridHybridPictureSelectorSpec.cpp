@@ -8,17 +8,17 @@
 #include "JHybridHybridPictureSelectorSpec.hpp"
 
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
 // Forward declaration of `PictureSelectorOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct PictureSelectorOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct PictureSelectorOptions; }
 // Forward declaration of `MediaType` to properly resolve imports.
-namespace margelo::pictureselector { enum class MediaType; }
+namespace margelo::nitro::margelo::pictureselector { enum class MediaType; }
 // Forward declaration of `CropOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct CropOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct CropOptions; }
 // Forward declaration of `CompressOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct CompressOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct CompressOptions; }
 // Forward declaration of `PickerTheme` to properly resolve imports.
-namespace margelo::pictureselector { enum class PickerTheme; }
+namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
 
 #include "MediaAsset.hpp"
 #include <vector>
@@ -38,7 +38,7 @@ namespace margelo::pictureselector { enum class PickerTheme; }
 #include "PickerTheme.hpp"
 #include "JPickerTheme.hpp"
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
   std::shared_ptr<JHybridHybridPictureSelectorSpec> JHybridHybridPictureSelectorSpec::JavaPart::getJHybridHybridPictureSelectorSpec() {
     auto hybridObject = JHybridObject::JavaPart::getJHybridObject();
@@ -122,4 +122,4 @@ namespace margelo::pictureselector {
     }();
   }
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector

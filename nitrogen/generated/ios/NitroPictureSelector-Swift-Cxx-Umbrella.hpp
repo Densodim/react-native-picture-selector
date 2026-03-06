@@ -9,19 +9,19 @@
 
 // Forward declarations of C++ defined types
 // Forward declaration of `CompressOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct CompressOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct CompressOptions; }
 // Forward declaration of `CropOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct CropOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct CropOptions; }
 // Forward declaration of `HybridHybridPictureSelectorSpec` to properly resolve imports.
-namespace margelo::pictureselector { class HybridHybridPictureSelectorSpec; }
+namespace margelo::nitro::margelo::pictureselector { class HybridHybridPictureSelectorSpec; }
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
 // Forward declaration of `MediaType` to properly resolve imports.
-namespace margelo::pictureselector { enum class MediaType; }
+namespace margelo::nitro::margelo::pictureselector { enum class MediaType; }
 // Forward declaration of `PickerTheme` to properly resolve imports.
-namespace margelo::pictureselector { enum class PickerTheme; }
+namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
 // Forward declaration of `PictureSelectorOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct PictureSelectorOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct PictureSelectorOptions; }
 
 // Include C++ defined types
 #include "CompressOptions.hpp"

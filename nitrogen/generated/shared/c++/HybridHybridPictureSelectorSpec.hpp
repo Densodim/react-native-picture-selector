@@ -14,16 +14,16 @@
 #endif
 
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
 // Forward declaration of `PictureSelectorOptions` to properly resolve imports.
-namespace margelo::pictureselector { struct PictureSelectorOptions; }
+namespace margelo::nitro::margelo::pictureselector { struct PictureSelectorOptions; }
 
 #include "MediaAsset.hpp"
 #include <vector>
 #include <NitroModules/Promise.hpp>
 #include "PictureSelectorOptions.hpp"
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
   using namespace margelo::nitro;
 
@@ -62,9 +62,8 @@ namespace margelo::pictureselector {
       void loadHybridMethods() override;
 
     protected:
-      // Tag for logging — must match the key used in registerHybridObjectConstructor()
-      // and in NitroModules.createHybridObject() on the JS side ("PictureSelector").
-      static constexpr auto TAG = "PictureSelector";
+      // Tag for logging
+      static constexpr auto TAG = "HybridPictureSelector";
   };
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector

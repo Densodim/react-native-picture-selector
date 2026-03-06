@@ -17,11 +17,11 @@
 
 #include "JHybridHybridPictureSelectorSpec.hpp"
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
 int initialize(JavaVM* vm) {
   return facebook::jni::initialize(vm, []() {
-    ::margelo::pictureselector::registerAllNatives();
+    ::margelo::nitro::margelo::pictureselector::registerAllNatives();
   });
 }
 
@@ -29,35 +29,13 @@ int initialize(JavaVM* vm) {
 
 void registerAllNatives() {
   using namespace margelo::nitro;
-  using namespace margelo::pictureselector;
+  using namespace margelo::nitro::margelo::pictureselector;
 
   // Register native JNI methods
-  margelo::pictureselector::JHybridHybridPictureSelectorSpec::CxxPart::registerNatives();
+  margelo::nitro::margelo::pictureselector::JHybridHybridPictureSelectorSpec::CxxPart::registerNatives();
 
   // Register Nitro Hybrid Objects
-  //
-  // HybridPictureSelector has a no-arg constructor and obtains its
-  // ReactApplicationContext from NitroModules.applicationContext (set during
-  // Nitro initialisation, before any JS call can reach this factory).
-  HybridObjectRegistry::registerHybridObjectConstructor(
-    "PictureSelector",
-    []() -> std::shared_ptr<HybridObject> {
-      // Locate the concrete Kotlin implementation class
-      static const auto klass =
-        jni::findClassStatic("com/margelo/pictureselector/HybridPictureSelector");
-      // Invoke the no-arg constructor.
-      // fbjni deduces the return type of newObject() from the template argument of
-      // getConstructor<F>().  Using void() would produce local_ref<void> which is not
-      // a valid fbjni reference type.  Using jni::JObject::javaobject() makes newObject()
-      // return local_ref<JObject>, which can then be safely cast with dynamic_ref_cast.
-      static const auto ctor = klass->getConstructor<jni::JObject::javaobject()>();
-      auto javaInstance = klass->newObject(ctor);
-      // Downcast to the spec JavaPart so JHybridHybridPictureSelectorSpec can wrap it
-      auto javaPart =
-        jni::dynamic_ref_cast<JHybridHybridPictureSelectorSpec::JavaPart>(javaInstance);
-      return std::make_shared<JHybridHybridPictureSelectorSpec>(javaPart);
-    }
-  );
+  
 }
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector

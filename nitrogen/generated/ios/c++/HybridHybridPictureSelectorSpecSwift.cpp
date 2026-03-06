@@ -7,5 +7,5 @@
 
 #include "HybridHybridPictureSelectorSpecSwift.hpp"
 
-namespace margelo::pictureselector {
-} // namespace margelo::pictureselector
+namespace margelo::nitro::margelo::pictureselector {
+} // namespace margelo::nitro::margelo::pictureselector

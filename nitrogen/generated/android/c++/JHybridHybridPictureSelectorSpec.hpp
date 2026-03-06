@@ -14,7 +14,7 @@
 
 
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
   using namespace facebook;
 
@@ -61,4 +61,4 @@ namespace margelo::pictureselector {
     jni::global_ref<JHybridHybridPictureSelectorSpec::JavaPart> _javaPart;
   };
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector

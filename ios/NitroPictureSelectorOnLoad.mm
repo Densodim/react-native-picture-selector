@@ -20,8 +20,8 @@
 extern "C" void* NitroPictureSelectorMakeHybrid();
 
 using namespace margelo::nitro;
-using namespace margelo::pictureselector;
-using namespace margelo::pictureselector::bridge::swift;
+using namespace margelo::nitro::margelo::pictureselector;
+using namespace margelo::nitro::margelo::pictureselector::bridge::swift;
 
 @interface NitroPictureSelectorOnLoad: NSObject
 @end

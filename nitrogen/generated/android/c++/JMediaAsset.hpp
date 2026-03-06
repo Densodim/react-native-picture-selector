@@ -13,7 +13,7 @@
 #include <optional>
 #include <string>
 
-namespace margelo::pictureselector {
+namespace margelo::nitro::margelo::pictureselector {
 
   using namespace facebook;
 
@@ -95,4 +95,4 @@ namespace margelo::pictureselector {
     }
   };
 
-} // namespace margelo::pictureselector
+} // namespace margelo::nitro::margelo::pictureselector
