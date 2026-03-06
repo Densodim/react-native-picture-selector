@@ -1,0 +1,1 @@
+{"version":3,"file":"PictureSelector.d.ts","sourceRoot":"","sources":["../../src/PictureSelector.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,UAAU,EAAE,sBAAsB,EAAE,MAAM,SAAS,CAAA;AA+CjE,eAAO,MAAM,eAAe;IAC1B;;;;;;;;OAQG;yBACiB,sBAAsB,GAAQ,OAAO,CAAC,UAAU,EAAE,CAAC;IAIvE;;;;;;;OAOG;yBACiB,sBAAsB,GAAQ,OAAO,CAAC,UAAU,EAAE,CAAC;CAGxE,CAAA"}

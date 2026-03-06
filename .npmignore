@@ -1,0 +1,21 @@
+# Development
+example/
+__tests__/
+.github/
+docs/
+
+# Configs
+.eslintrc*
+.prettierrc*
+.editorconfig
+babel.config.js
+jest.config.js
+lefthook.yml
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts not needed by consumers
+nitrogen.config.json
+tsconfig.json

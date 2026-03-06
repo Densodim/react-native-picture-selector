@@ -1,0 +1,58 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:2:1-39:12
+INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:2:1-39:12
+	package
+		INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:6:3-63
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:6:20-60
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:9:3-11:34
+	android:maxSdkVersion
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:11:5-31
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:10:5-60
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:14:3-74
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:14:20-71
+uses-permission#android.permission.READ_MEDIA_VIDEO
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:15:3-73
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:15:20-70
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:18:3-20:34
+	android:maxSdkVersion
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:20:5-31
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:19:5-61
+application
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:22:3-37:17
+provider#com.margelo.pictureselector.PictureSelectorFileProvider
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:28:5-36:16
+	android:grantUriPermissions
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:32:7-41
+	android:authorities
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:30:7-58
+	android:exported
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:31:7-31
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:29:7-77
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:33:7-35:46
+	android:resource
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:35:9-43
+	android:name
+		ADDED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:34:9-59
+uses-sdk
+INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml
+INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml

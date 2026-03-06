@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.margelo.pictureselector" >
+
+    <uses-sdk android:minSdkVersion="24" />
+
+    <!-- ─── Permissions ───────────────────────────────────────────────────── -->
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Android ≤ 12 (API 32) -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- Android 13+ (API 33+) granular media permissions -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <!-- Required to write camera captures on Android ≤ 9 (API 28) -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application>
+
+        <!--
+      FileProvider is required by PictureSelector for sharing URIs on
+      Android 7+ (API 24+). The authority must match the one used in
+      PictureSelectorOptionsMapper (${applicationId}.fileprovider).
+        -->
+        <provider
+            android:name="com.margelo.pictureselector.PictureSelectorFileProvider"
+            android:authorities="dollar_openBracket_applicationId_closeBracket.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

@@ -1,0 +1,2 @@
+com.margelo.pictureselector
+xml file_paths

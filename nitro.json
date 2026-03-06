@@ -1,0 +1,11 @@
+{
+  "cxxNamespace": ["margelo", "pictureselector"],
+  "ios": {
+    "iosModuleName": "NitroPictureSelector"
+  },
+  "android": {
+    "androidNamespace": ["com", "margelo", "pictureselector"],
+    "androidCxxLibName": "NitroPictureSelector"
+  },
+  "autolinking": {}
+}

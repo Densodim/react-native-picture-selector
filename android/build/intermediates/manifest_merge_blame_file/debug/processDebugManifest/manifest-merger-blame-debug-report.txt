@@ -1,0 +1,64 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.margelo.pictureselector" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+6
+7    <!-- ─── Permissions ───────────────────────────────────────────────────── -->
+8
+9    <uses-permission android:name="android.permission.CAMERA" />
+9-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:6:3-63
+9-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:6:20-60
+10
+11    <!-- Android ≤ 12 (API 32) -->
+12    <uses-permission
+12-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:9:3-11:34
+13        android:name="android.permission.READ_EXTERNAL_STORAGE"
+13-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:10:5-60
+14        android:maxSdkVersion="32" />
+14-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:11:5-31
+15
+16    <!-- Android 13+ (API 33+) granular media permissions -->
+17    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+17-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:14:3-74
+17-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:14:20-71
+18    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+18-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:15:3-73
+18-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:15:20-70
+19
+20    <!-- Required to write camera captures on Android ≤ 9 (API 28) -->
+21    <uses-permission
+21-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:18:3-20:34
+22        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+22-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:19:5-61
+23        android:maxSdkVersion="32" />
+23-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:20:5-31
+24
+25    <application>
+25-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:22:3-37:17
+26
+27        <!--
+28      FileProvider is required by PictureSelector for sharing URIs on
+29      Android 7+ (API 24+). The authority must match the one used in
+30      PictureSelectorOptionsMapper (${applicationId}.fileprovider).
+31        -->
+32        <provider
+32-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:28:5-36:16
+33            android:name="com.margelo.pictureselector.PictureSelectorFileProvider"
+33-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:29:7-77
+34            android:authorities="${applicationId}.fileprovider"
+34-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:30:7-58
+35            android:exported="false"
+35-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:31:7-31
+36            android:grantUriPermissions="true" >
+36-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:32:7-41
+37            <meta-data
+37-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:33:7-35:46
+38                android:name="android.support.FILE_PROVIDER_PATHS"
+38-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:34:9-59
+39                android:resource="@xml/file_paths" />
+39-->C:\Home\work\modules\react-native-picture-selector\android\src\main\AndroidManifest.xml:35:9-43
+40        </provider>
+41    </application>
+42
+43</manifest>

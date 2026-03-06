@@ -1,0 +1,102 @@
+buildscript {
+  ext.kotlin_version = '1.9.22'
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.1.4'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  namespace 'com.margelo.pictureselector'
+  compileSdk 34
+
+  defaultConfig {
+    minSdk 24
+    targetSdk 34
+    ndk {
+      abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+    }
+    consumerProguardFiles 'proguard-rules.pro'
+    externalNativeBuild {
+      cmake {
+        arguments "-DANDROID_STL=c++_shared"
+      }
+    }
+  }
+
+  buildFeatures {
+    prefab true
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+
+  sourceSets {
+    main {
+      // Include nitrogen-generated Kotlin sources
+      java.srcDirs += [
+        'src/main/kotlin',
+        '../nitrogen/generated/android/kotlin'
+      ]
+    }
+  }
+}
+
+repositories {
+  google()
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  implementation 'com.facebook.react:react-native'
+
+  // Coroutines
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+
+  // ─── PictureSelector v3.11.2 ─────────────────────────────────────────────
+  implementation 'io.github.lucksiege:pictureselector:v3.11.2'
+  implementation 'io.github.lucksiege:compress:v3.11.2'
+  implementation 'io.github.lucksiege:ucrop:v3.11.2'
+  implementation 'io.github.lucksiege:camerax:v3.11.2'
+
+  // ─── Image loading engine (required by PictureSelector) ──────────────────
+  implementation 'com.github.bumptech.glide:glide:4.16.0'
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
+  // ─── Nitro bridge ────────────────────────────────────────────────────────
+  implementation project(":react-native-nitro-modules")
+}
+
+afterEvaluate {
+  // Ensure react-native-nitro-modules C++ build finishes before we link against libNitroModules.so
+  tasks.configureEach { task ->
+    if (task.name.startsWith("buildCMake")) {
+      def nitroProject = rootProject.findProject(":react-native-nitro-modules")
+      def nitroTask = nitroProject?.tasks?.findByName(task.name)
+      if (nitroTask) {
+        task.dependsOn(nitroTask)
+      }
+    }
+  }
+}

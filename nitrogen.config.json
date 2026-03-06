@@ -1,0 +1,11 @@
+{
+  "cxxNamespace": "margelo::nitro::pictureselector",
+  "outputDirectory": "./nitrogen",
+  "specs": ["./src/specs"],
+  "android": {
+    "packageName": "com.nitro.pictureselector"
+  },
+  "ios": {
+    "moduleName": "NitroPictureSelector"
+  }
+}
