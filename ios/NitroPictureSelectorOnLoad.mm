@@ -2,15 +2,22 @@
 // NitroPictureSelectorOnLoad.mm
 // Registers HybridPictureSelector with Nitro's HybridObjectRegistry.
 //
-// The +load method runs automatically when the ObjC runtime loads this class,
-// before main() — guaranteeing the factory is available when JS calls
-// NitroModules.createHybridObject("PictureSelector").
+// The +load ObjC method runs before main(), guaranteeing the factory is
+// available when JS calls NitroModules.createHybridObject("PictureSelector").
+//
+// We bridge to Swift via @_cdecl("NitroPictureSelectorMakeHybrid") to avoid
+// ambiguous Swift class constructor syntax from C++.
 //
 
 #import <Foundation/Foundation.h>
 #import <NitroModules/HybridObjectRegistry.hpp>
 #import "NitroPictureSelector-Swift-Cxx-Umbrella.hpp"
 #import "HybridHybridPictureSelectorSpecSwift.hpp"
+
+// Defined in HybridPictureSelector.swift via @_cdecl.
+// Creates a HybridPictureSelector instance and returns a retained raw pointer
+// to its HybridHybridPictureSelectorSpec_cxx wrapper.
+extern "C" void* NitroPictureSelectorMakeHybrid();
 
 using namespace margelo::nitro;
 using namespace margelo::pictureselector;
@@ -25,8 +32,8 @@ using namespace margelo::pictureselector::bridge::swift;
   HybridObjectRegistry::registerHybridObjectConstructor(
     "PictureSelector",
     []() -> std::shared_ptr<HybridObject> {
-      auto swiftPart = NitroPictureSelector::HybridPictureSelector();
-      return swiftPart.getCxxWrapper().getCxxPart();
+      void* ptr = NitroPictureSelectorMakeHybrid();
+      return create_std__shared_ptr_HybridHybridPictureSelectorSpec_(ptr);
     }
   );
 }

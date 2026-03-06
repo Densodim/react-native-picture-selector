@@ -369,6 +369,17 @@ enum PictureSelectorError: Error, LocalizedError {
   }
 }
 
+// MARK: - Nitro registration helper
+
+/// Called from NitroPictureSelectorOnLoad.mm at startup.
+/// Creates a HybridPictureSelector instance and returns a retained raw pointer
+/// to its HybridHybridPictureSelectorSpec_cxx wrapper.
+/// The caller (C++ factory) takes ownership via create_std__shared_ptr_HybridHybridPictureSelectorSpec_.
+@_cdecl("NitroPictureSelectorMakeHybrid")
+public func NitroPictureSelectorMakeHybrid() -> UnsafeMutableRawPointer {
+  HybridPictureSelector().getCxxWrapper().toUnsafe()
+}
+
 // MARK: - UIColor hex initialiser
 
 extension UIColor {
