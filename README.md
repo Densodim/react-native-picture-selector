@@ -16,7 +16,7 @@ High-performance photo and video picker for React Native, built on **Nitro Modul
 - **Cropping** — fixed ratio, free-style, circular (iOS)
 - **Compression** — JPEG quality + max dimensions
 - **Video duration limits** — min / max in seconds
-- **Pre-selected assets** — restore a previous selection
+- **Pre-selected assets** — restore a previous selection (Android only)
 - **Themes** — WeChat / White / Dark (Android), hex accent color (iOS)
 - **Strict TypeScript** — fully typed API and result objects
 - **Promise-based** — async/await friendly, cancel → rejection
@@ -360,6 +360,8 @@ openPicker({ themeColor: '#E91E63' })  // Pink
 
 ### Pre-selected assets
 
+> **iOS limitation**: `selectedAssets` is not yet implemented on iOS. The option is accepted but has no effect. See Android usage below.
+
 Pass `file://` URIs of previously selected files to pre-check them in the gallery grid.
 
 ```ts
@@ -638,6 +640,8 @@ export default ChatInput
 
 ### Profile settings — restore previous selection
 
+> **Note**: `selectedAssets` pre-selection works on Android only. On iOS the picker opens without any pre-checked items.
+
 ```tsx
 function ProfilePhotoScreen() {
   const [photo, setPhoto] = useState<MediaAsset | null>(null)
@@ -693,6 +697,7 @@ function ProfilePhotoScreen() {
 - `bucketName` is only populated on Android.
 - `themeColor` sets HXPhotoPicker's global `themeColor` property (navigation bar, selection indicators).
 - `theme` enum values (`WECHAT`, `WHITE`, `DARK`) are ignored on iOS — use `themeColor` instead.
+- `selectedAssets` pre-selection is **not yet implemented** on iOS — the option is accepted but has no effect. Resolving `file://` URIs back to `PHAsset` objects is required for this feature.
 
 ---
 
@@ -723,6 +728,7 @@ function ProfilePhotoScreen() {
 
 | Feature | Status |
 |---------|--------|
+| `selectedAssets` pre-selection (iOS) | Not yet implemented — Android only |
 | Audio file selection | Not supported |
 | iCloud Photos (iOS) | Partial — depends on HXPhotoPicker internals |
 | Live Photos | Not exposed |
