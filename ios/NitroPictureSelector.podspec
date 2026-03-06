@@ -1,4 +1,6 @@
 require "json"
+load File.join(__dir__, '..', 'nitrogen', 'generated', 'ios', 'NitroPictureSelector+autolinking.rb')
+
 package = JSON.parse(File.read(File.join(__dir__, "..", "package.json")))
 
 Pod::Spec.new do |s|
@@ -14,26 +16,26 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
 
   # ── Sources ─────────────────────────────────────────────────────────────
-  # Include both our hand-written Swift and the nitrogen-generated bridge files.
-  s.source_files = [
-    "ios/**/*.{h,m,mm,swift}",
-    "../nitrogen/generated/ios/**/*.{h,m,mm,swift,hpp,cpp}",
-  ]
+  # Hand-written Swift implementation (paths relative to this podspec in ios/).
+  s.source_files = "**/*.{h,m,mm,swift}"
 
   # ── Dependencies ─────────────────────────────────────────────────────────
   s.dependency "React-Core"
-  s.dependency "react-native-nitro-modules"
 
-  # HXPhotoPicker v5 — default subspec includes Picker + Editor + Camera
+  # HXPhotoPicker v5 — Picker + Editor + Camera
   s.dependency "HXPhotoPicker", "~> 5.0.5"
 
   # ── Compiler flags ───────────────────────────────────────────────────────
-  # Enable HXPhotoPicker conditional compilation flags
-  # Enable Swift/C++ interop required by Nitro for zero-overhead calls
+  # HXPhotoPicker feature flags + Swift/C++ interop for Nitro.
+  # CLANG_CXX_LANGUAGE_STANDARD and DEFINES_MODULE are merged in by add_nitrogen_files.
   s.pod_target_xcconfig = {
     "SWIFT_ACTIVE_COMPILATION_CONDITIONS" =>
       "HXPICKER_ENABLE_CORE HXPICKER_ENABLE_PICKER HXPICKER_ENABLE_EDITOR HXPICKER_ENABLE_CAMERA",
     "OTHER_SWIFT_FLAGS" => "-enable-experimental-cxx-interop",
-    "CLANG_CXX_LANGUAGE_STANDARD" => "c++20",
   }
+
+  # ── Nitrogen ─────────────────────────────────────────────────────────────
+  # Adds nitrogen/generated/shared/**/* + nitrogen/generated/ios/**/* to source_files,
+  # sets public/private headers, adds NitroModules dependency, merges C++20 xcconfig.
+  add_nitrogen_files(s)
 end
