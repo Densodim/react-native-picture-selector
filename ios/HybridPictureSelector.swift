@@ -97,10 +97,7 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
         }
 
         var cameraConfig = CameraConfiguration()
-        switch options.mediaType {
-        case "video": cameraConfig.mediaType = .video
-        default:      cameraConfig.mediaType = .photo
-        }
+        cameraConfig.mediaType = (options.mediaType == .video) ? .video : .photo
         if let maxDur = options.maxVideoDuration {
           cameraConfig.videoMaximumDuration = maxDur
         }
@@ -146,9 +143,9 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
 
     // Media type
     switch options.mediaType {
-    case "video":
+    case .video:
       config.selectOptions = [.video]
-    case "all":
+    case .all:
       config.selectOptions = [.photo, .video]
     default:
       config.selectOptions = [.photo]
