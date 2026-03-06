@@ -196,6 +196,13 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
       config.themeColor = color
     }
 
+    // selectedAssets: pre-selecting assets by file:// URI requires resolving each URI
+    // back to a PHAsset via PHPhotoLibrary and wrapping it in a PhotoAsset object.
+    // This is not yet implemented. Callers should not rely on this option on iOS.
+    // TODO: implement pre-selection using PHAsset.fetchAssets(withALAssetURLs:options:)
+    //       or localIdentifier lookup, then set config.preSelectedAssets (verify field name
+    //       in HXPhotoPicker v5.0.5 before enabling).
+
     return config
   }
 
