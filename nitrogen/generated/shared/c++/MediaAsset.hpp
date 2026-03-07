@@ -33,7 +33,7 @@
 #include <string>
 #include <optional>
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * A struct which can be represented as a JavaScript object (MediaAsset).
@@ -60,16 +60,16 @@ namespace margelo::nitro::margelo::pictureselector {
     friend bool operator==(const MediaAsset& lhs, const MediaAsset& rhs) = default;
   };
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ MediaAsset <> JS MediaAsset (object)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::MediaAsset> final {
-    static inline margelo::nitro::margelo::pictureselector::MediaAsset fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::MediaAsset> final {
+    static inline margelo::nitro::pictureselector::MediaAsset fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return margelo::nitro::margelo::pictureselector::MediaAsset(
+      return margelo::nitro::pictureselector::MediaAsset(
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "uri"))),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "type"))),
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "mimeType"))),
@@ -83,7 +83,7 @@ namespace margelo::nitro {
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "bucketName")))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::margelo::pictureselector::MediaAsset& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::pictureselector::MediaAsset& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "uri"), JSIConverter<std::string>::toJSI(runtime, arg.uri));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "type"), JSIConverter<std::string>::toJSI(runtime, arg.type));

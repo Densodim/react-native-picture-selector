@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `CompressOptions`, backed by a C++ struct.
  */
-public typealias CompressOptions = margelo.nitro.margelo.pictureselector.CompressOptions
+public typealias CompressOptions = margelo.nitro.pictureselector.CompressOptions
 
 public extension CompressOptions {
-  private typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  private typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   /**
    * Create a new instance of `CompressOptions`.

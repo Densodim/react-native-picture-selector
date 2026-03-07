@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `MediaAsset`, backed by a C++ struct.
  */
-public typealias MediaAsset = margelo.nitro.margelo.pictureselector.MediaAsset
+public typealias MediaAsset = margelo.nitro.pictureselector.MediaAsset
 
 public extension MediaAsset {
-  private typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  private typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   /**
    * Create a new instance of `MediaAsset`.

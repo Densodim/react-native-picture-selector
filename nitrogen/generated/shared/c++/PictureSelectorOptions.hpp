@@ -29,13 +29,13 @@
 #endif
 
 // Forward declaration of `MediaType` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class MediaType; }
+namespace margelo::nitro::pictureselector { enum class MediaType; }
 // Forward declaration of `CropOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CropOptions; }
+namespace margelo::nitro::pictureselector { struct CropOptions; }
 // Forward declaration of `CompressOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CompressOptions; }
+namespace margelo::nitro::pictureselector { struct CompressOptions; }
 // Forward declaration of `PickerTheme` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
+namespace margelo::nitro::pictureselector { enum class PickerTheme; }
 
 #include "MediaType.hpp"
 #include <optional>
@@ -45,7 +45,7 @@ namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
 #include <string>
 #include <vector>
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * A struct which can be represented as a JavaScript object (PictureSelectorOptions).
@@ -71,38 +71,38 @@ namespace margelo::nitro::margelo::pictureselector {
     friend bool operator==(const PictureSelectorOptions& lhs, const PictureSelectorOptions& rhs) = default;
   };
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ PictureSelectorOptions <> JS PictureSelectorOptions (object)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::PictureSelectorOptions> final {
-    static inline margelo::nitro::margelo::pictureselector::PictureSelectorOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::PictureSelectorOptions> final {
+    static inline margelo::nitro::pictureselector::PictureSelectorOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return margelo::nitro::margelo::pictureselector::PictureSelectorOptions(
-        JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::MediaType>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "mediaType"))),
+      return margelo::nitro::pictureselector::PictureSelectorOptions(
+        JSIConverter<std::optional<margelo::nitro::pictureselector::MediaType>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "mediaType"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxCount"))),
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "enableCamera"))),
-        JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CropOptions>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "crop"))),
-        JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CompressOptions>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "compress"))),
+        JSIConverter<std::optional<margelo::nitro::pictureselector::CropOptions>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "crop"))),
+        JSIConverter<std::optional<margelo::nitro::pictureselector::CompressOptions>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "compress"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxVideoDuration"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "minVideoDuration"))),
-        JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::PickerTheme>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "theme"))),
+        JSIConverter<std::optional<margelo::nitro::pictureselector::PickerTheme>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "theme"))),
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "themeColor"))),
         JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "selectedAssets")))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::margelo::pictureselector::PictureSelectorOptions& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::pictureselector::PictureSelectorOptions& arg) {
       jsi::Object obj(runtime);
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "mediaType"), JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::MediaType>>::toJSI(runtime, arg.mediaType));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "mediaType"), JSIConverter<std::optional<margelo::nitro::pictureselector::MediaType>>::toJSI(runtime, arg.mediaType));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "maxCount"), JSIConverter<std::optional<double>>::toJSI(runtime, arg.maxCount));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "enableCamera"), JSIConverter<std::optional<bool>>::toJSI(runtime, arg.enableCamera));
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "crop"), JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CropOptions>>::toJSI(runtime, arg.crop));
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "compress"), JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CompressOptions>>::toJSI(runtime, arg.compress));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "crop"), JSIConverter<std::optional<margelo::nitro::pictureselector::CropOptions>>::toJSI(runtime, arg.crop));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "compress"), JSIConverter<std::optional<margelo::nitro::pictureselector::CompressOptions>>::toJSI(runtime, arg.compress));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "maxVideoDuration"), JSIConverter<std::optional<double>>::toJSI(runtime, arg.maxVideoDuration));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "minVideoDuration"), JSIConverter<std::optional<double>>::toJSI(runtime, arg.minVideoDuration));
-      obj.setProperty(runtime, PropNameIDCache::get(runtime, "theme"), JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::PickerTheme>>::toJSI(runtime, arg.theme));
+      obj.setProperty(runtime, PropNameIDCache::get(runtime, "theme"), JSIConverter<std::optional<margelo::nitro::pictureselector::PickerTheme>>::toJSI(runtime, arg.theme));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "themeColor"), JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.themeColor));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "selectedAssets"), JSIConverter<std::optional<std::vector<std::string>>>::toJSI(runtime, arg.selectedAssets));
       return obj;
@@ -115,14 +115,14 @@ namespace margelo::nitro {
       if (!nitro::isPlainObject(runtime, obj)) {
         return false;
       }
-      if (!JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::MediaType>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "mediaType")))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::pictureselector::MediaType>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "mediaType")))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxCount")))) return false;
       if (!JSIConverter<std::optional<bool>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "enableCamera")))) return false;
-      if (!JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CropOptions>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "crop")))) return false;
-      if (!JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::CompressOptions>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "compress")))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::pictureselector::CropOptions>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "crop")))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::pictureselector::CompressOptions>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "compress")))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxVideoDuration")))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "minVideoDuration")))) return false;
-      if (!JSIConverter<std::optional<margelo::nitro::margelo::pictureselector::PickerTheme>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "theme")))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::pictureselector::PickerTheme>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "theme")))) return false;
       if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "themeColor")))) return false;
       if (!JSIConverter<std::optional<std::vector<std::string>>>::canConvert(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "selectedAssets")))) return false;
       return true;

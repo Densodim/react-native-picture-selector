@@ -17,11 +17,11 @@
 
 #include "JHybridHybridPictureSelectorSpec.hpp"
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
 int initialize(JavaVM* vm) {
   return facebook::jni::initialize(vm, []() {
-    ::margelo::nitro::margelo::pictureselector::registerAllNatives();
+    ::margelo::nitro::pictureselector::registerAllNatives();
   });
 }
 
@@ -29,13 +29,13 @@ int initialize(JavaVM* vm) {
 
 void registerAllNatives() {
   using namespace margelo::nitro;
-  using namespace margelo::nitro::margelo::pictureselector;
+  using namespace margelo::nitro::pictureselector;
 
   // Register native JNI methods
-  margelo::nitro::margelo::pictureselector::JHybridHybridPictureSelectorSpec::CxxPart::registerNatives();
+  margelo::nitro::pictureselector::JHybridHybridPictureSelectorSpec::CxxPart::registerNatives();
 
   // Register Nitro Hybrid Objects
   
 }
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector

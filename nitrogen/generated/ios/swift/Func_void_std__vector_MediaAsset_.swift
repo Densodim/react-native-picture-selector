@@ -12,7 +12,7 @@ import NitroModules
  * This class can be used from C++, e.g. to wrap the Swift closure as a `std::function`.
  */
 public final class Func_void_std__vector_MediaAsset_ {
-  public typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  public typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   private let closure: (_ value: [MediaAsset]) -> Void
 

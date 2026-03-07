@@ -8,7 +8,7 @@
 /**
  * Represents the JS union `MediaType`, backed by a C++ enum.
  */
-public typealias MediaType = margelo.nitro.margelo.pictureselector.MediaType
+public typealias MediaType = margelo.nitro.pictureselector.MediaType
 
 public extension MediaType {
   /**

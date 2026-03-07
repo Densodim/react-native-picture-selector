@@ -18,11 +18,11 @@ import NitroModules
  */
 open class HybridHybridPictureSelectorSpec_cxx {
   /**
-   * The Swift <> C++ bridge's namespace (`margelo::nitro::margelo::pictureselector::bridge::swift`)
+   * The Swift <> C++ bridge's namespace (`margelo::nitro::pictureselector::bridge::swift`)
    * from `NitroPictureSelector-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
-  public typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  public typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   /**
    * Holds an instance of the `HybridHybridPictureSelectorSpec` Swift protocol.

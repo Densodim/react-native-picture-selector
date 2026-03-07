@@ -8,7 +8,7 @@
 /**
  * Represents the JS union `PickerTheme`, backed by a C++ enum.
  */
-public typealias PickerTheme = margelo.nitro.margelo.pictureselector.PickerTheme
+public typealias PickerTheme = margelo.nitro.pictureselector.PickerTheme
 
 public extension PickerTheme {
   /**

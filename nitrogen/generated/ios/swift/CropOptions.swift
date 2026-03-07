@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `CropOptions`, backed by a C++ struct.
  */
-public typealias CropOptions = margelo.nitro.margelo.pictureselector.CropOptions
+public typealias CropOptions = margelo.nitro.pictureselector.CropOptions
 
 public extension CropOptions {
-  private typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  private typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   /**
    * Create a new instance of `CropOptions`.

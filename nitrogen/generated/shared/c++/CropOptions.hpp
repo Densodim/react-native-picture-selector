@@ -32,7 +32,7 @@
 
 #include <optional>
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * A struct which can be represented as a JavaScript object (CropOptions).
@@ -53,16 +53,16 @@ namespace margelo::nitro::margelo::pictureselector {
     friend bool operator==(const CropOptions& lhs, const CropOptions& rhs) = default;
   };
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ CropOptions <> JS CropOptions (object)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::CropOptions> final {
-    static inline margelo::nitro::margelo::pictureselector::CropOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::CropOptions> final {
+    static inline margelo::nitro::pictureselector::CropOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return margelo::nitro::margelo::pictureselector::CropOptions(
+      return margelo::nitro::pictureselector::CropOptions(
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "enabled"))),
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "freeStyle"))),
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "circular"))),
@@ -70,7 +70,7 @@ namespace margelo::nitro {
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "ratioY")))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::margelo::pictureselector::CropOptions& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::pictureselector::CropOptions& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "enabled"), JSIConverter<bool>::toJSI(runtime, arg.enabled));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "freeStyle"), JSIConverter<std::optional<bool>>::toJSI(runtime, arg.freeStyle));

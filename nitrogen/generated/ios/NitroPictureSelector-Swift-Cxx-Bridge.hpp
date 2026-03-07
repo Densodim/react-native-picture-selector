@@ -9,17 +9,17 @@
 
 // Forward declarations of C++ defined types
 // Forward declaration of `CompressOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CompressOptions; }
+namespace margelo::nitro::pictureselector { struct CompressOptions; }
 // Forward declaration of `CropOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CropOptions; }
+namespace margelo::nitro::pictureselector { struct CropOptions; }
 // Forward declaration of `HybridHybridPictureSelectorSpec` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { class HybridHybridPictureSelectorSpec; }
+namespace margelo::nitro::pictureselector { class HybridHybridPictureSelectorSpec; }
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::pictureselector { struct MediaAsset; }
 // Forward declaration of `MediaType` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class MediaType; }
+namespace margelo::nitro::pictureselector { enum class MediaType; }
 // Forward declaration of `PickerTheme` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
+namespace margelo::nitro::pictureselector { enum class PickerTheme; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridHybridPictureSelectorSpec_cxx` to properly resolve imports.
@@ -46,7 +46,7 @@ namespace NitroPictureSelector { class HybridHybridPictureSelectorSpec_cxx; }
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
  * as well as helper functions to interact with those C++ types from Swift.
  */
-namespace margelo::nitro::margelo::pictureselector::bridge::swift {
+namespace margelo::nitro::pictureselector::bridge::swift {
 
   // pragma MARK: std::optional<std::string>
   /**
@@ -267,4 +267,4 @@ namespace margelo::nitro::margelo::pictureselector::bridge::swift {
     return Result<std::shared_ptr<Promise<std::vector<MediaAsset>>>>::withError(error);
   }
 
-} // namespace margelo::nitro::margelo::pictureselector::bridge::swift
+} // namespace margelo::nitro::pictureselector::bridge::swift

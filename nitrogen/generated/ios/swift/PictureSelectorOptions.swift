@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `PictureSelectorOptions`, backed by a C++ struct.
  */
-public typealias PictureSelectorOptions = margelo.nitro.margelo.pictureselector.PictureSelectorOptions
+public typealias PictureSelectorOptions = margelo.nitro.pictureselector.PictureSelectorOptions
 
 public extension PictureSelectorOptions {
-  private typealias bridge = margelo.nitro.margelo.pictureselector.bridge.swift
+  private typealias bridge = margelo.nitro.pictureselector.bridge.swift
 
   /**
    * Create a new instance of `PictureSelectorOptions`.

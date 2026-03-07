@@ -8,17 +8,17 @@
 #include "JHybridHybridPictureSelectorSpec.hpp"
 
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::pictureselector { struct MediaAsset; }
 // Forward declaration of `PictureSelectorOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct PictureSelectorOptions; }
+namespace margelo::nitro::pictureselector { struct PictureSelectorOptions; }
 // Forward declaration of `MediaType` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class MediaType; }
+namespace margelo::nitro::pictureselector { enum class MediaType; }
 // Forward declaration of `CropOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CropOptions; }
+namespace margelo::nitro::pictureselector { struct CropOptions; }
 // Forward declaration of `CompressOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct CompressOptions; }
+namespace margelo::nitro::pictureselector { struct CompressOptions; }
 // Forward declaration of `PickerTheme` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
+namespace margelo::nitro::pictureselector { enum class PickerTheme; }
 
 #include "MediaAsset.hpp"
 #include <vector>
@@ -38,7 +38,7 @@ namespace margelo::nitro::margelo::pictureselector { enum class PickerTheme; }
 #include "PickerTheme.hpp"
 #include "JPickerTheme.hpp"
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   std::shared_ptr<JHybridHybridPictureSelectorSpec> JHybridHybridPictureSelectorSpec::JavaPart::getJHybridHybridPictureSelectorSpec() {
     auto hybridObject = JHybridObject::JavaPart::getJHybridObject();
@@ -122,4 +122,4 @@ namespace margelo::nitro::margelo::pictureselector {
     }();
   }
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector

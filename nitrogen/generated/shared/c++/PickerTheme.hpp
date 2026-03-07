@@ -23,7 +23,7 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * An enum which can be represented as a JavaScript union (PickerTheme).
@@ -35,30 +35,30 @@ namespace margelo::nitro::margelo::pictureselector {
     DARK      SWIFT_NAME(dark) = 3,
   } CLOSED_ENUM;
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ PickerTheme <> JS PickerTheme (union)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::PickerTheme> final {
-    static inline margelo::nitro::margelo::pictureselector::PickerTheme fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::PickerTheme> final {
+    static inline margelo::nitro::pictureselector::PickerTheme fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, arg);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
-        case hashString("default"): return margelo::nitro::margelo::pictureselector::PickerTheme::DEFAULT;
-        case hashString("wechat"): return margelo::nitro::margelo::pictureselector::PickerTheme::WECHAT;
-        case hashString("white"): return margelo::nitro::margelo::pictureselector::PickerTheme::WHITE;
-        case hashString("dark"): return margelo::nitro::margelo::pictureselector::PickerTheme::DARK;
+        case hashString("default"): return margelo::nitro::pictureselector::PickerTheme::DEFAULT;
+        case hashString("wechat"): return margelo::nitro::pictureselector::PickerTheme::WECHAT;
+        case hashString("white"): return margelo::nitro::pictureselector::PickerTheme::WHITE;
+        case hashString("dark"): return margelo::nitro::pictureselector::PickerTheme::DARK;
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert \"" + unionValue + "\" to enum PickerTheme - invalid value!");
       }
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, margelo::nitro::margelo::pictureselector::PickerTheme arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, margelo::nitro::pictureselector::PickerTheme arg) {
       switch (arg) {
-        case margelo::nitro::margelo::pictureselector::PickerTheme::DEFAULT: return JSIConverter<std::string>::toJSI(runtime, "default");
-        case margelo::nitro::margelo::pictureselector::PickerTheme::WECHAT: return JSIConverter<std::string>::toJSI(runtime, "wechat");
-        case margelo::nitro::margelo::pictureselector::PickerTheme::WHITE: return JSIConverter<std::string>::toJSI(runtime, "white");
-        case margelo::nitro::margelo::pictureselector::PickerTheme::DARK: return JSIConverter<std::string>::toJSI(runtime, "dark");
+        case margelo::nitro::pictureselector::PickerTheme::DEFAULT: return JSIConverter<std::string>::toJSI(runtime, "default");
+        case margelo::nitro::pictureselector::PickerTheme::WECHAT: return JSIConverter<std::string>::toJSI(runtime, "wechat");
+        case margelo::nitro::pictureselector::PickerTheme::WHITE: return JSIConverter<std::string>::toJSI(runtime, "white");
+        case margelo::nitro::pictureselector::PickerTheme::DARK: return JSIConverter<std::string>::toJSI(runtime, "dark");
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert PickerTheme to JS - invalid value: "
                                     + std::to_string(static_cast<int>(arg)) + "!");

@@ -14,16 +14,16 @@
 #endif
 
 // Forward declaration of `MediaAsset` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct MediaAsset; }
+namespace margelo::nitro::pictureselector { struct MediaAsset; }
 // Forward declaration of `PictureSelectorOptions` to properly resolve imports.
-namespace margelo::nitro::margelo::pictureselector { struct PictureSelectorOptions; }
+namespace margelo::nitro::pictureselector { struct PictureSelectorOptions; }
 
 #include "MediaAsset.hpp"
 #include <vector>
 #include <NitroModules/Promise.hpp>
 #include "PictureSelectorOptions.hpp"
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   using namespace margelo::nitro;
 
@@ -66,4 +66,4 @@ namespace margelo::nitro::margelo::pictureselector {
       static constexpr auto TAG = "HybridPictureSelector";
   };
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector

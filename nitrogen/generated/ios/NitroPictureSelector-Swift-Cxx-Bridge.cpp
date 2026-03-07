@@ -12,7 +12,7 @@
 #include "NitroPictureSelector-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
 
-namespace margelo::nitro::margelo::pictureselector::bridge::swift {
+namespace margelo::nitro::pictureselector::bridge::swift {
 
   // pragma MARK: std::function<void(const std::vector<MediaAsset>& /* result */)>
   Func_void_std__vector_MediaAsset_ create_Func_void_std__vector_MediaAsset_(void* NON_NULL swiftClosureWrapper) noexcept {
@@ -33,10 +33,10 @@ namespace margelo::nitro::margelo::pictureselector::bridge::swift {
   // pragma MARK: std::shared_ptr<HybridHybridPictureSelectorSpec>
   std::shared_ptr<HybridHybridPictureSelectorSpec> create_std__shared_ptr_HybridHybridPictureSelectorSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     NitroPictureSelector::HybridHybridPictureSelectorSpec_cxx swiftPart = NitroPictureSelector::HybridHybridPictureSelectorSpec_cxx::fromUnsafe(swiftUnsafePointer);
-    return std::make_shared<margelo::nitro::margelo::pictureselector::HybridHybridPictureSelectorSpecSwift>(swiftPart);
+    return std::make_shared<margelo::nitro::pictureselector::HybridHybridPictureSelectorSpecSwift>(swiftPart);
   }
   void* NON_NULL get_std__shared_ptr_HybridHybridPictureSelectorSpec_(std__shared_ptr_HybridHybridPictureSelectorSpec_ cppType) {
-    std::shared_ptr<margelo::nitro::margelo::pictureselector::HybridHybridPictureSelectorSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::margelo::pictureselector::HybridHybridPictureSelectorSpecSwift>(cppType);
+    std::shared_ptr<margelo::nitro::pictureselector::HybridHybridPictureSelectorSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::pictureselector::HybridHybridPictureSelectorSpecSwift>(cppType);
     #ifdef NITRO_DEBUG
     if (swiftWrapper == nullptr) [[unlikely]] {
       throw std::runtime_error("Class \"HybridHybridPictureSelectorSpec\" is not implemented in Swift!");
@@ -46,4 +46,4 @@ namespace margelo::nitro::margelo::pictureselector::bridge::swift {
     return swiftPart.toUnsafe();
   }
 
-} // namespace margelo::nitro::margelo::pictureselector::bridge::swift
+} // namespace margelo::nitro::pictureselector::bridge::swift

@@ -9,7 +9,7 @@
 #include <functional>
 #include <NitroModules/NitroDefines.hpp>
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   [[deprecated("Use registerNatives() instead.")]]
   int initialize(JavaVM* vm);
@@ -23,7 +23,7 @@ namespace margelo::nitro::margelo::pictureselector {
    * JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
    *   return facebook::jni::initialize(vm, []() {
    *     // register all NitroPictureSelector HybridObjects
-   *     margelo::nitro::margelo::pictureselector::registerNatives();
+   *     margelo::nitro::pictureselector::registerNatives();
    *     // any other custom registrations go here.
    *   });
    * }
@@ -31,4 +31,4 @@ namespace margelo::nitro::margelo::pictureselector {
    */
   void registerAllNatives();
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector

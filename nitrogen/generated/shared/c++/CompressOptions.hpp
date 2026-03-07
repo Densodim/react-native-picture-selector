@@ -32,7 +32,7 @@
 
 #include <optional>
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * A struct which can be represented as a JavaScript object (CompressOptions).
@@ -52,23 +52,23 @@ namespace margelo::nitro::margelo::pictureselector {
     friend bool operator==(const CompressOptions& lhs, const CompressOptions& rhs) = default;
   };
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ CompressOptions <> JS CompressOptions (object)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::CompressOptions> final {
-    static inline margelo::nitro::margelo::pictureselector::CompressOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::CompressOptions> final {
+    static inline margelo::nitro::pictureselector::CompressOptions fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       jsi::Object obj = arg.asObject(runtime);
-      return margelo::nitro::margelo::pictureselector::CompressOptions(
+      return margelo::nitro::pictureselector::CompressOptions(
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "enabled"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "quality"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxWidth"))),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, PropNameIDCache::get(runtime, "maxHeight")))
       );
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::margelo::pictureselector::CompressOptions& arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, const margelo::nitro::pictureselector::CompressOptions& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "enabled"), JSIConverter<bool>::toJSI(runtime, arg.enabled));
       obj.setProperty(runtime, PropNameIDCache::get(runtime, "quality"), JSIConverter<std::optional<double>>::toJSI(runtime, arg.quality));

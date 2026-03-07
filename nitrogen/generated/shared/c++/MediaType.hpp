@@ -23,7 +23,7 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-namespace margelo::nitro::margelo::pictureselector {
+namespace margelo::nitro::pictureselector {
 
   /**
    * An enum which can be represented as a JavaScript union (MediaType).
@@ -34,28 +34,28 @@ namespace margelo::nitro::margelo::pictureselector {
     ALL      SWIFT_NAME(all) = 2,
   } CLOSED_ENUM;
 
-} // namespace margelo::nitro::margelo::pictureselector
+} // namespace margelo::nitro::pictureselector
 
 namespace margelo::nitro {
 
   // C++ MediaType <> JS MediaType (union)
   template <>
-  struct JSIConverter<margelo::nitro::margelo::pictureselector::MediaType> final {
-    static inline margelo::nitro::margelo::pictureselector::MediaType fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
+  struct JSIConverter<margelo::nitro::pictureselector::MediaType> final {
+    static inline margelo::nitro::pictureselector::MediaType fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, arg);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
-        case hashString("image"): return margelo::nitro::margelo::pictureselector::MediaType::IMAGE;
-        case hashString("video"): return margelo::nitro::margelo::pictureselector::MediaType::VIDEO;
-        case hashString("all"): return margelo::nitro::margelo::pictureselector::MediaType::ALL;
+        case hashString("image"): return margelo::nitro::pictureselector::MediaType::IMAGE;
+        case hashString("video"): return margelo::nitro::pictureselector::MediaType::VIDEO;
+        case hashString("all"): return margelo::nitro::pictureselector::MediaType::ALL;
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert \"" + unionValue + "\" to enum MediaType - invalid value!");
       }
     }
-    static inline jsi::Value toJSI(jsi::Runtime& runtime, margelo::nitro::margelo::pictureselector::MediaType arg) {
+    static inline jsi::Value toJSI(jsi::Runtime& runtime, margelo::nitro::pictureselector::MediaType arg) {
       switch (arg) {
-        case margelo::nitro::margelo::pictureselector::MediaType::IMAGE: return JSIConverter<std::string>::toJSI(runtime, "image");
-        case margelo::nitro::margelo::pictureselector::MediaType::VIDEO: return JSIConverter<std::string>::toJSI(runtime, "video");
-        case margelo::nitro::margelo::pictureselector::MediaType::ALL: return JSIConverter<std::string>::toJSI(runtime, "all");
+        case margelo::nitro::pictureselector::MediaType::IMAGE: return JSIConverter<std::string>::toJSI(runtime, "image");
+        case margelo::nitro::pictureselector::MediaType::VIDEO: return JSIConverter<std::string>::toJSI(runtime, "video");
+        case margelo::nitro::pictureselector::MediaType::ALL: return JSIConverter<std::string>::toJSI(runtime, "all");
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert MediaType to JS - invalid value: "
                                     + std::to_string(static_cast<int>(arg)) + "!");
