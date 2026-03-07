@@ -32,7 +32,6 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     "SWIFT_ACTIVE_COMPILATION_CONDITIONS" =>
       "HXPICKER_ENABLE_CORE HXPICKER_ENABLE_PICKER HXPICKER_ENABLE_EDITOR HXPICKER_ENABLE_CAMERA",
-    "OTHER_SWIFT_FLAGS" => "-enable-experimental-cxx-interop",
   }
 
   # ── Nitrogen ─────────────────────────────────────────────────────────────
