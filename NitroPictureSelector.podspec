@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.homepage         = package["homepage"] || "https://github.com/nicepkg/react-native-picture-selector"
   s.license          = { :type => "MIT" }
   s.author           = "react-native-picture-selector contributors"
+  s.source           = { :git => "https://github.com/nicepkg/react-native-picture-selector.git", :tag => s.version.to_s }
 
   s.platforms        = { :ios => "13.0" }
   s.swift_version    = "5.9"
