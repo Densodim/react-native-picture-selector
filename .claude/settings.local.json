@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx nitrogen src/specs)",
-      "Bash(npm version patch)"
+      "Bash(npm version patch)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

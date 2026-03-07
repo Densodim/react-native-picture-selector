@@ -15,27 +15,14 @@ import NitroModules
 //   - Nitro calls openPicker / openCamera on the JS thread.
 //   - All UIKit calls are dispatched to DispatchQueue.main.
 //   - Async result mapping runs in a Swift Task (cooperative thread pool).
-//
-// API REQUIRES VERIFICATION:
-//   - PhotoPickerControllerDelegate method signatures in HXPhotoPicker v5.0.5.
-//   - PhotoAsset.getURL(compression:result:) callback API availability.
-//   - PickerResult.photoAssets field name.
-//   - PhotoAsset.mediaType enum values (.photo / .video).
-//   - PhotoAsset.imageSize property name.
-//   - PhotoAsset.videoDuration unit (seconds vs ms).
-//   - AssetURLResult.fileSize field name / optionality.
-//   - PhotoAsset.Compression type name and initialiser parameters.
-//   - EditorConfiguration.Photo.CropSize.isRoundCrop property name.
 // ─────────────────────────────────────────────────────────────────────────────
 
 final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridHybridPictureSelectorSpec_protocol {
 
   // MARK: - Private state
 
-  /// Bundles the pending resolver together with the options so the delegate
-  /// can perform compression-aware result mapping.
   private struct PendingSession {
-    let resolver: (Result<[MediaAsset], Error>) -> Void
+    let promise: Promise<[MediaAsset]>
     let options: PictureSelectorOptions
   }
 
@@ -47,110 +34,104 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
   // MARK: - openPicker
 
   func openPicker(options: PictureSelectorOptions) -> Promise<[MediaAsset]> {
-    return Promise { [weak self] resolver in
+    let promise = Promise<[MediaAsset]>()
+
+    DispatchQueue.main.async { [weak self] in
       guard let self else {
-        resolver.reject(PictureSelectorError.unknown("openPicker: native module was deallocated"))
+        promise.reject(withError: PictureSelectorError.unknown("openPicker: native module was deallocated"))
         return
       }
 
-      DispatchQueue.main.async {
-        if self.session != nil {
-          resolver.reject(PictureSelectorError.unknown(
-            "A picker or camera session is already active. Dismiss it before opening a new one."
-          ))
-          return
-        }
-
-        guard let topVC = self.topViewController() else {
-          resolver.reject(PictureSelectorError.unknown(
-            "No active UIViewController. Ensure the picker is called from a mounted component."
-          ))
-          return
-        }
-
-        self.session = PendingSession(
-          resolver: { result in
-            switch result {
-            case .success(let assets): resolver.resolve(assets)
-            case .failure(let err):    resolver.reject(err)
-            }
-          },
-          options: options
-        )
-
-        let config = self.buildPickerConfig(from: options)
-        let picker = PhotoPickerController(picker: config)
-        picker.pickerDelegate = self
-
-        self.activePicker = picker
-        topVC.present(picker, animated: true)
+      if self.session != nil {
+        promise.reject(withError: PictureSelectorError.unknown(
+          "A picker or camera session is already active. Dismiss it before opening a new one."
+        ))
+        return
       }
+
+      guard let topVC = self.topViewController() else {
+        promise.reject(withError: PictureSelectorError.unknown(
+          "No active UIViewController. Ensure the picker is called from a mounted component."
+        ))
+        return
+      }
+
+      self.session = PendingSession(promise: promise, options: options)
+
+      let config = self.buildPickerConfig(from: options)
+      let picker = PhotoPickerController(picker: config)
+      picker.pickerDelegate = self
+
+      self.activePicker = picker
+      topVC.present(picker, animated: true)
     }
+
+    return promise
   }
 
   // MARK: - openCamera
 
   func openCamera(options: PictureSelectorOptions) -> Promise<[MediaAsset]> {
-    return Promise { [weak self] resolver in
+    let promise = Promise<[MediaAsset]>()
+
+    DispatchQueue.main.async { [weak self] in
       guard let self else {
-        resolver.reject(PictureSelectorError.unknown("openCamera: native module was deallocated"))
+        promise.reject(withError: PictureSelectorError.unknown("openCamera: native module was deallocated"))
         return
       }
 
-      DispatchQueue.main.async {
-        if self.session != nil {
-          resolver.reject(PictureSelectorError.unknown(
-            "A picker or camera session is already active. Dismiss it before opening a new one."
-          ))
+      if self.session != nil {
+        promise.reject(withError: PictureSelectorError.unknown(
+          "A picker or camera session is already active. Dismiss it before opening a new one."
+        ))
+        return
+      }
+
+      guard let topVC = self.topViewController() else {
+        promise.reject(withError: PictureSelectorError.unknown("No active UIViewController."))
+        return
+      }
+
+      var cameraConfig = CameraConfiguration()
+      if let maxDur = options.maxVideoDuration {
+        cameraConfig.videoMaximumDuration = maxDur
+      }
+
+      let captureType: CameraController.CaptureType
+      switch options.mediaType {
+      case .video: captureType = .video
+      case .all:   captureType = .all
+      default:     captureType = .photo
+      }
+
+      let camera = CameraController(config: cameraConfig, type: captureType)
+      camera.completion = { [weak self] result, _, _ in
+        guard let self else {
+          promise.reject(withError: PictureSelectorError.unknown("openCamera: native module was deallocated"))
           return
         }
-
-        guard let topVC = self.topViewController() else {
-          resolver.reject(PictureSelectorError.unknown("No active UIViewController."))
-          return
-        }
-
-        var cameraConfig = CameraConfiguration()
-        cameraConfig.mediaType = (options.mediaType == .video) ? .video : .photo
-        if let maxDur = options.maxVideoDuration {
-          cameraConfig.videoMaximumDuration = maxDur
-        }
-
-        // API REQUIRES VERIFICATION:
-        // Photo.camera(_:fromViewController:completion:cancel:) method signature.
-        // If this overload doesn't exist, use CameraController directly:
-        //   let cam = CameraController(config: cameraConfig)
-        //   cam.onCompletion = { ... }
-        //   topVC.present(cam, animated: true)
-        Photo.camera(
-          cameraConfig,
-          fromViewController: topVC
-        ) { [weak self] result, _ in
-          guard let self else {
-            resolver.reject(PictureSelectorError.unknown("openCamera: native module was deallocated"))
-            return
+        Task {
+          do {
+            let asset = try await self.mapAsset(
+              result.photoAsset,
+              compress: options.compress,
+              isOriginal: false
+            )
+            promise.resolve(withResult: [asset])
+          } catch {
+            promise.reject(withError: error)
           }
-          guard let photoAsset = result?.photoAsset else {
-            resolver.reject(PictureSelectorError.cancelled)
-            return
-          }
-          Task {
-            do {
-              let asset = try await self.mapAsset(
-                photoAsset,
-                compress: options.compress,
-                isOriginal: false
-              )
-              resolver.resolve([asset])
-            } catch {
-              resolver.reject(error)
-            }
-          }
-        } cancel: { _ in
-          resolver.reject(PictureSelectorError.cancelled)
         }
       }
+      camera.cancelHandler = { _ in
+        promise.reject(withError: PictureSelectorError.cancelled)
+      }
+
+      self.activePicker = camera
+      topVC.present(camera, animated: true)
     }
+
+    return promise
   }
 
   // MARK: - Config builder
@@ -172,36 +153,32 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
     config.maximumSelectedCount = Int(options.maxCount ?? 1)
 
     // In-picker camera button
-    config.allowCustomCamera = options.enableCamera ?? true
+    config.photoList.allowAddCamera = options.enableCamera ?? true
 
-    // Video duration limits
+    // Video duration limits (Int in HXPhotoPicker)
     if let maxDur = options.maxVideoDuration {
-      config.maximumSelectedVideoDuration = maxDur
+      config.maximumSelectedVideoDuration = Int(maxDur)
     }
     if let minDur = options.minVideoDuration {
-      config.minimumSelectedVideoDuration = minDur
+      config.minimumSelectedVideoDuration = Int(minDur)
     }
 
-    // Editor / crop  (only when maxCount == 1)
+    // Editor / crop (only when maxCount == 1)
     let maxCount = Int(options.maxCount ?? 1)
     if let crop = options.crop, crop.enabled, maxCount == 1 {
       config.editorOptions = [.photo]
       var editorConfig = EditorConfiguration()
 
-      var cropSizeConfig = EditorConfiguration.Photo.CropSize()
       if crop.circular == true {
-        // API REQUIRES VERIFICATION: isRoundCrop property name in v5.0.5
-        cropSizeConfig.isRoundCrop = true
+        editorConfig.cropSize.isRoundCrop = true
       } else if crop.freeStyle == true {
-        cropSizeConfig.aspectRatios = []   // empty array = free style
+        editorConfig.cropSize.isFixedRatio = false
       } else {
         let x = crop.ratioX ?? 1.0
         let y = crop.ratioY ?? 1.0
-        cropSizeConfig.aspectRatios = [
-          .init(title: "", ratio: .init(width: x, height: y))
-        ]
+        editorConfig.cropSize.isFixedRatio = true
+        editorConfig.cropSize.aspectRatio = .init(width: x, height: y)
       }
-      editorConfig.photo.cropSize = cropSizeConfig
       config.editor = editorConfig
     }
 
@@ -209,13 +186,6 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
     if let hex = options.themeColor, let color = UIColor(hex: hex) {
       config.themeColor = color
     }
-
-    // selectedAssets: pre-selecting assets by file:// URI requires resolving each URI
-    // back to a PHAsset via PHPhotoLibrary and wrapping it in a PhotoAsset object.
-    // This is not yet implemented. Callers should not rely on this option on iOS.
-    // TODO: implement pre-selection using PHAsset.fetchAssets(withALAssetURLs:options:)
-    //       or localIdentifier lookup, then set config.preSelectedAssets (verify field name
-    //       in HXPhotoPicker v5.0.5 before enabling).
 
     return config
   }
@@ -243,8 +213,6 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
     compress: CompressOptions?,
     isOriginal: Bool
   ) async throws -> MediaAsset {
-    // Obtain file URL via callback, bridged to async/await.
-    // API REQUIRES VERIFICATION: getURL(compression:result:) availability in v5.0.5.
     let urlResult: AssetURLResult = try await withCheckedThrowingContinuation { cont in
       photoAsset.getURL(
         compression: buildCompression(from: compress)
@@ -256,22 +224,23 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
       }
     }
 
-    // Determine if the user applied edits
     let wasEdited = photoAsset.editedResult != nil
     let finalUri  = urlResult.url.absoluteString
     let editedUri: String? = wasEdited ? finalUri : nil
 
-    // Image / video dimensions
-    // API REQUIRES VERIFICATION: imageSize property name in v5.0.5
     let size: CGSize = photoAsset.imageSize
 
-    // Duration: HXPhotoPicker returns seconds; bridge spec expects ms.
-    // API REQUIRES VERIFICATION: videoDuration property name and unit.
+    // HXPhotoPicker returns seconds; bridge spec expects ms.
     let durationMs: Double = (photoAsset.videoDuration ?? 0) * 1_000
 
-    // File size
-    // API REQUIRES VERIFICATION: AssetURLResult.fileSize field name.
-    let fileSize: Double = Double(urlResult.fileSize ?? 0)
+    // AssetURLResult has no fileSize; read from disk.
+    let fileSize: Double
+    if let attrs = try? FileManager.default.attributesOfItem(atPath: urlResult.url.path),
+       let bytes = attrs[.size] as? UInt64 {
+      fileSize = Double(bytes)
+    } else {
+      fileSize = 0
+    }
 
     let typeStr: String = (photoAsset.mediaType == .video) ? "video" : "image"
 
@@ -292,7 +261,6 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
 
   // MARK: - Compression helper
 
-  /// API REQUIRES VERIFICATION: PhotoAsset.Compression type name and init params in v5.0.5.
   private func buildCompression(from options: CompressOptions?) -> PhotoAsset.Compression? {
     guard let opts = options, opts.enabled else { return nil }
     return PhotoAsset.Compression(
@@ -345,7 +313,6 @@ extension HybridPictureSelector: PhotoPickerControllerDelegate {
     _ pickerController: PhotoPickerController,
     didFinishSelection result: PickerResult
   ) {
-    // Capture and clear session atomically before dismiss completes
     let captured = session
     session = nil
     activePicker = nil
@@ -353,15 +320,15 @@ extension HybridPictureSelector: PhotoPickerControllerDelegate {
     pickerController.dismiss(animated: true) { [weak self] in
       guard let s = captured else { return }
       guard let self else {
-        s.resolver(.failure(PictureSelectorError.unknown("pickerController: native module was deallocated")))
+        s.promise.reject(withError: PictureSelectorError.unknown("pickerController: native module was deallocated"))
         return
       }
       Task {
         do {
           let assets = try await self.mapResults(result, compress: s.options.compress)
-          s.resolver(.success(assets))
+          s.promise.resolve(withResult: assets)
         } catch {
-          s.resolver(.failure(error))
+          s.promise.reject(withError: error)
         }
       }
     }
@@ -373,7 +340,7 @@ extension HybridPictureSelector: PhotoPickerControllerDelegate {
     activePicker = nil
 
     pickerController.dismiss(animated: true) {
-      captured?.resolver(.failure(PictureSelectorError.cancelled))
+      captured?.promise.reject(withError: PictureSelectorError.cancelled)
     }
   }
 }
@@ -397,9 +364,6 @@ enum PictureSelectorError: Error, LocalizedError {
 // MARK: - Nitro registration helper
 
 /// Called from NitroPictureSelectorOnLoad.mm at startup.
-/// Creates a HybridPictureSelector instance and returns a retained raw pointer
-/// to its HybridHybridPictureSelectorSpec_cxx wrapper.
-/// The caller (C++ factory) takes ownership via create_std__shared_ptr_HybridHybridPictureSelectorSpec_.
 @_cdecl("NitroPictureSelectorMakeHybrid")
 public func NitroPictureSelectorMakeHybrid() -> UnsafeMutableRawPointer {
   HybridPictureSelector().getCxxWrapper().toUnsafe()
