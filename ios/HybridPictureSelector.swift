@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import AVFoundation
 import HXPhotoPicker
 import NitroModules
 
@@ -112,11 +113,7 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
         }
         Task {
           do {
-            let asset = try await self.mapAsset(
-              result.photoAsset,
-              compress: options.compress,
-              isOriginal: false
-            )
+            let asset = try await self.mapCameraResult(result, compress: options.compress)
             promise.resolve(withResult: [asset])
           } catch {
             promise.reject(withError: error)
@@ -257,6 +254,58 @@ final class HybridPictureSelector: HybridHybridPictureSelectorSpec_base, HybridH
       isOriginal: isOriginal,
       bucketName: nil
     )
+  }
+
+  // MARK: - Camera result mapping
+
+  private func mapCameraResult(
+    _ result: CameraController.Result,
+    compress: CompressOptions?
+  ) async throws -> MediaAsset {
+    switch result {
+    case .image(let image):
+      let quality = compress?.quality ?? 0.8
+      guard let data = image.jpegData(compressionQuality: quality) else {
+        throw PictureSelectorError.unknown("Failed to encode captured image")
+      }
+      let fileName = "camera_\(UUID().uuidString).jpg"
+      let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+      try data.write(to: tempURL)
+      let fileSize = Double(data.count)
+      return MediaAsset(
+        uri:        tempURL.absoluteString,
+        type:       "image",
+        mimeType:   "image/jpeg",
+        width:      Double(image.size.width * image.scale),
+        height:     Double(image.size.height * image.scale),
+        duration:   0,
+        fileName:   fileName,
+        fileSize:   fileSize,
+        editedUri:  nil,
+        isOriginal: false,
+        bucketName: nil
+      )
+    case .video(let url):
+      let attrs = try? FileManager.default.attributesOfItem(atPath: url.path)
+      let fileSize = Double((attrs?[.size] as? UInt64) ?? 0)
+      let asset = AVURLAsset(url: url)
+      let duration = CMTimeGetSeconds(asset.duration) * 1_000
+      let tracks = asset.tracks(withMediaType: .video)
+      let size = tracks.first?.naturalSize ?? .zero
+      return MediaAsset(
+        uri:        url.absoluteString,
+        type:       "video",
+        mimeType:   mimeType(for: url),
+        width:      Double(size.width),
+        height:     Double(size.height),
+        duration:   duration,
+        fileName:   url.lastPathComponent,
+        fileSize:   fileSize,
+        editedUri:  nil,
+        isOriginal: false,
+        bucketName: nil
+      )
+    }
   }
 
   // MARK: - Compression helper
