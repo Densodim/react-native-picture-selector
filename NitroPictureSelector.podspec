@@ -1,13 +1,13 @@
 require "json"
-load File.join(__dir__, '..', 'nitrogen', 'generated', 'ios', 'NitroPictureSelector+autolinking.rb')
+load File.join(__dir__, 'nitrogen', 'generated', 'ios', 'NitroPictureSelector+autolinking.rb')
 
-package = JSON.parse(File.read(File.join(__dir__, "..", "package.json")))
+package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
   s.name             = "NitroPictureSelector"
   s.version          = package["version"]
   s.summary          = package["description"]
-  s.homepage         = package["repository"]["url"]
+  s.homepage         = package["homepage"] || "https://github.com/nicepkg/react-native-picture-selector"
   s.license          = { :type => "MIT" }
   s.author           = "react-native-picture-selector contributors"
 
@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.requires_arc     = true
 
   # ── Sources ─────────────────────────────────────────────────────────────
-  # Hand-written Swift implementation (paths relative to this podspec in ios/).
-  s.source_files = "**/*.{h,m,mm,swift}"
+  # Hand-written Swift/ObjC++ implementation lives in ios/.
+  s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   # ── Dependencies ─────────────────────────────────────────────────────────
   s.dependency "React-Core"
