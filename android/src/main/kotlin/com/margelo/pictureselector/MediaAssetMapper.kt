@@ -13,11 +13,10 @@ import java.io.File
  * 3. Real file path        (realPath != null)
  * 4. Fallback              (path — may be content:// URI)
  *
- * API REQUIRES VERIFICATION:
- * - LocalMedia.bucketDisplayName field name in v3.11.2
- *   (may be bucketDisplayName or albumName).
- * - LocalMedia.size field name (may be size or fileSize).
- * - LocalMedia.duration unit (ms in v3; confirm).
+ * Field mapping verified against PictureSelector v3.11.2:
+ * - LocalMedia.size       — file size in bytes (Long)
+ * - LocalMedia.duration   — duration in milliseconds (Long)
+ * - LocalMedia.parentFolderName — album/bucket display name (String)
  */
 object MediaAssetMapper {
 
@@ -44,7 +43,7 @@ object MediaAssetMapper {
       height     = media.height.toDouble(),
       duration   = media.duration.toDouble(), // milliseconds
       fileName   = fileName,
-      fileSize   = media.size.toDouble(),     // API REQUIRES VERIFICATION: field name
+      fileSize   = media.size.toDouble(),
       editedUri  = editedPath,
       isOriginal = null,
       bucketName = media.parentFolderName,

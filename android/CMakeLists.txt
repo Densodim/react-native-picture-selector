@@ -18,21 +18,3 @@ include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/NitroPictureSelector+a
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
   src/main/cpp/cpp-adapter.cpp
 )
-
-# Directly link libNitroModules.so from its stable cmake build output path.
-# The prefab for react-native-nitro-modules is header-only at CMake configure
-# time (fix-prefab.gradle updates it only after native build), so we link
-# the .so directly to avoid undefined symbol errors on fresh builds.
-#
-# Use a generator expression so the correct variant (debug/release) is picked
-# automatically — avoids breaking assembleRelease / EAS production builds.
-string(TOLOWER "${CMAKE_BUILD_TYPE}" _build_type_lower)
-if(_build_type_lower STREQUAL "release")
-  set(NITRO_BUILD_VARIANT "release")
-else()
-  set(NITRO_BUILD_VARIANT "debug")
-endif()
-
-target_link_libraries(${CMAKE_PROJECT_NAME}
-  ${CMAKE_SOURCE_DIR}/../../react-native-nitro-modules/android/build/intermediates/cmake/${NITRO_BUILD_VARIANT}/obj/${ANDROID_ABI}/libNitroModules.so
-)

@@ -18,13 +18,6 @@ import com.margelo.nitro.com.margelo.pictureselector.NitroPictureSelectorOnLoad
  * // MainApplication.kt
  * override fun getPackages() = PackageList(this).packages + NitroPictureSelectorPackage()
  * ```
- *
- * API REQUIRES VERIFICATION:
- * - NitroModules.addHybridObjectCreator is the actual registration API in
- *   react-native-nitro-modules for Android. Verify against the installed
- *   version of the library. The creator name ("PictureSelector") must
- *   exactly match the string passed to NitroModules.createHybridObject()
- *   on the JS side.
  */
 class NitroPictureSelectorPackage : ReactPackage {
 

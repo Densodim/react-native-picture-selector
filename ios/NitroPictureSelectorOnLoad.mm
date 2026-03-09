@@ -17,7 +17,7 @@
 // Defined in HybridPictureSelector.swift via @_cdecl.
 // Creates a HybridPictureSelector instance and returns a retained raw pointer
 // to its HybridHybridPictureSelectorSpec_cxx wrapper.
-extern "C" void* NitroPictureSelectorMakeHybrid();
+extern "C" void* NitroPictureSelectorMakeHybrid() noexcept;
 
 using namespace margelo::nitro;
 using namespace margelo::nitro::pictureselector;

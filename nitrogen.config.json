@@ -1,11 +1,19 @@
 {
-  "cxxNamespace": "margelo::nitro::pictureselector",
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": ["margelo", "nitro", "pictureselector"],
   "outputDirectory": "./nitrogen",
   "specs": ["./src/specs"],
-  "android": {
-    "packageName": "com.nitro.pictureselector"
-  },
   "ios": {
-    "moduleName": "NitroPictureSelector"
+    "iosModuleName": "NitroPictureSelector"
+  },
+  "android": {
+    "androidNamespace": ["com", "margelo", "pictureselector"],
+    "androidCxxLibName": "NitroPictureSelector"
+  },
+  "autolinking": {
+    "PictureSelector": {
+      "swift": "HybridPictureSelector",
+      "kotlin": "HybridPictureSelector"
+    }
   }
 }

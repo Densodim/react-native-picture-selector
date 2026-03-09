@@ -15,28 +15,20 @@ import java.io.File
  * (io.github.lucksiege:compress). This engine is invoked after selection
  * when compression is enabled.
  *
- * API REQUIRES VERIFICATION: The exact Luban API (OnNewCompressListener
- * callback method signatures) should be confirmed against the bundled
- * Luban version in io.github.lucksiege:compress:v3.11.2.
+ * Luban handles compression quality internally using an adaptive algorithm
+ * based on image dimensions. Direct JPEG quality control is not supported
+ * by this bundled version. Use [ignoreBy] to skip already-small files.
  */
-class LubanCompressEngine(
-  private val quality: Int,
-  private val maxWidth: Int,
-  private val maxHeight: Int,
-) : CompressFileEngine {
+class LubanCompressEngine : CompressFileEngine {
 
   override fun onStartCompress(
     context: Context,
     source: ArrayList<Uri>,
     call: OnKeyValueResultCallbackListener,
   ) {
-    // API REQUIRES VERIFICATION: setQuality() method name in bundled Luban version.
-    // In most Luban forks bundled with PictureSelector, quality is set via .quality(Int)
-    // or .setCompressQuality(Int). Adjust the method name after verifying against
-    // io.github.lucksiege:compress:v3.11.2 source.
     Luban.with(context)
       .load(source)
-      .ignoreBy(100) // skip files under 100 KB
+      .ignoreBy(100) // skip files already under 100 KB
       .setTargetDir(context.cacheDir.absolutePath)
       .setCompressListener(object : OnNewCompressListener {
         override fun onStart() {

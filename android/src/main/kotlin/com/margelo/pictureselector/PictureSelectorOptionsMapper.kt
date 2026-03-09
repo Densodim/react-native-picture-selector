@@ -12,11 +12,7 @@ import com.margelo.nitro.com.margelo.pictureselector.PictureSelectorOptions
  * [PictureSelector.create(activity).openGallery()] /
  * [PictureSelector.create(activity).openCamera()].
  *
- * API REQUIRES VERIFICATION:
- * - setSelectVideoMaxDuration / setSelectVideoMinDuration unit (seconds vs ms).
- *   In v3.11.2 these accept seconds. Confirm in the library source.
- * - setSelectorUIStyle builder method name & enum values.
- * - setSelectedData signature for pre-selected items.
+ * Video duration methods accept seconds in v3.11.2.
  */
 object PictureSelectorOptionsMapper {
 
@@ -37,9 +33,8 @@ object PictureSelectorOptionsMapper {
     // Show camera button inside gallery
     builder.isDisplayCamera(options.enableCamera ?: true)
 
-    // Pre-selected assets — requires conversion to LocalMedia list
-    // API REQUIRES VERIFICATION: setSelectedData(List<LocalMedia>) signature
-    // options.selectedAssets is currently unused in v1; add in future.
+    // Pre-selected assets: selectedAssets (file:// URIs) conversion to LocalMedia
+    // is not yet implemented; skipped intentionally.
   }
 
   /**
@@ -68,10 +63,7 @@ object PictureSelectorOptionsMapper {
 
     val compress = options.compress
     if (compress != null && compress.enabled) {
-      val quality   = (((compress.quality ?: 0.8) * 100).toInt()).coerceIn(10, 100)
-      val maxWidth  = (compress.maxWidth  ?: 1920.0).toInt()
-      val maxHeight = (compress.maxHeight ?: 1920.0).toInt()
-      builder.setCompressEngine(LubanCompressEngine(quality, maxWidth, maxHeight))
+      builder.setCompressEngine(LubanCompressEngine())
     }
   }
 
@@ -104,11 +96,7 @@ object PictureSelectorOptionsMapper {
     // ── Compress engine ───────────────────────────────────────────────────
     val compress = options.compress
     if (compress != null && compress.enabled) {
-      val quality   = (((compress.quality ?: 0.8) * 100).toInt()).coerceIn(10, 100)
-      val maxWidth  = (compress.maxWidth  ?: 1920.0).toInt()
-      val maxHeight = (compress.maxHeight ?: 1920.0).toInt()
-
-      builder.setCompressEngine(LubanCompressEngine(quality, maxWidth, maxHeight))
+      builder.setCompressEngine(LubanCompressEngine())
     }
   }
 
