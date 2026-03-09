@@ -11,7 +11,7 @@
     "androidCxxLibName": "NitroPictureSelector"
   },
   "autolinking": {
-    "PictureSelector": {
+    "HybridPictureSelector": {
       "swift": "HybridPictureSelector",
       "kotlin": "HybridPictureSelector"
     }

@@ -12,7 +12,7 @@ let _native: HybridPictureSelector | null = null
 function getNative(): HybridPictureSelector {
   if (_native == null) {
     _native = NitroModules.createHybridObject<HybridPictureSelector>(
-      'PictureSelector'
+      'HybridPictureSelector'
     )
   }
   return _native
