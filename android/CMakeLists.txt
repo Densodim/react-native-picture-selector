@@ -18,3 +18,17 @@ include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/NitroPictureSelector+a
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
   src/main/cpp/cpp-adapter.cpp
 )
+
+# The react-native-nitro-modules prefab is header-only at CMake configure time,
+# so react-native-nitro-modules::NitroModules adds no .so to the link command.
+# Link libNitroModules.so directly using the known build output path.
+string(TOLOWER "${CMAKE_BUILD_TYPE}" _build_type_lower)
+if(_build_type_lower STREQUAL "release")
+  set(NITRO_BUILD_VARIANT "release")
+else()
+  set(NITRO_BUILD_VARIANT "debug")
+endif()
+
+target_link_libraries(${CMAKE_PROJECT_NAME}
+  ${CMAKE_SOURCE_DIR}/../../react-native-nitro-modules/android/build/intermediates/cmake/${NITRO_BUILD_VARIANT}/obj/${ANDROID_ABI}/libNitroModules.so
+)
