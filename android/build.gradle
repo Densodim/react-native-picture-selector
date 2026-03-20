@@ -13,6 +13,11 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+def reactNativeArchitectures() {
+  def value = project.getProperties().get("reactNativeArchitectures")
+  return value ? value.split(",") : ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+}
+
 android {
   namespace 'com.margelo.pictureselector'
   compileSdk 34
@@ -21,7 +26,7 @@ android {
     minSdk 24
     targetSdk 34
     ndk {
-      abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+      abiFilters(*reactNativeArchitectures())
     }
     consumerProguardFiles 'proguard-rules.pro'
     externalNativeBuild {

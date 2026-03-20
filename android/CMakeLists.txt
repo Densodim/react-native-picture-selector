@@ -23,7 +23,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # so react-native-nitro-modules::NitroModules adds no .so to the link command.
 # Link libNitroModules.so directly using the known build output path.
 string(TOLOWER "${CMAKE_BUILD_TYPE}" _build_type_lower)
-if(_build_type_lower STREQUAL "release")
+if(_build_type_lower STREQUAL "release" OR _build_type_lower STREQUAL "relwithdebinfo")
   set(NITRO_BUILD_VARIANT "release")
 else()
   set(NITRO_BUILD_VARIANT "debug")
